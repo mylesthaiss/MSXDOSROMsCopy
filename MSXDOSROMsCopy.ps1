@@ -145,7 +145,10 @@ function ConvertToDosPath {
 }
 
 function ConvertFileNameToTitle {
-    # Convert filename to game title
+    <#
+        .SYNOPSIS
+            Convert filename to game title
+    #>
     param (
         [Parameter(ValueFromPipeline)]
         [string]$File        
@@ -161,8 +164,14 @@ function ConvertFileNameToTitle {
 }
 
 function SetFileName {
-    # Determine if rom file is a sequal or contains region tag
-    # If present place at the end of the file name <e.g Arkanoid 2 (Japan) >> arknoi2j>
+    <#
+        .SYNOPSIS
+            Sets new filename
+
+        .DESCRIPTION
+            Determine if rom file is a sequal or contains region tag
+            If present place at the end of the file name <e.g Arkanoid 2 (Japan) >> arknoi2j>
+    #>
     param (
         [Parameter(ValueFromPipeline)]        
         [string]$OrigName,
@@ -171,17 +180,17 @@ function SetFileName {
 
     process {
         $tag = switch -wildcard ($OrigName) {
-            "*japan*"               {"j"; break}
-            "*english*"             {"en"; break}
-            "*spanish*"             {"es"; break}
-            "*usa*"                 {"us"; break}
-            "*europe*"              {"eu"; break}
-            "*demo*"                {"dm"; break}
-            "*side a*"              {"a"; break}
-            "*side b*"              {"b"; break}
-            "*beta*"                {"b"; break}
-            "*enhanced version*"    {"e"; break}
-            default                 {""; break}
+            "*japan*"               { "j"; break }
+            "*english*"             { "en"; break }
+            "*spanish*"             { "es"; break }
+            "*usa*"                 { "us"; break }
+            "*europe*"              { "eu"; break }
+            "*demo*"                { "dm"; break }
+            "*side a*"              { "a"; break }
+            "*side b*"              { "b"; break }
+            "*beta*"                { "b"; break }
+            "*enhanced version*"    { "e"; break }
+            default                 { ""; break }
         }
 
         if ($NewName) {
@@ -196,7 +205,10 @@ function SetFileName {
 }
 
 function SetSubFolder {
-    # Determine media sub-folder based on file extension
+    <#
+        .SYNOPSIS
+            Determine media sub-folder based on file extension
+    #>
     param (
         [Parameter(ValueFromPipeline)]
         [String]$FileName
@@ -205,14 +217,14 @@ function SetSubFolder {
     process {
         $fileExt = [System.IO.Path]::GetExtension($FileName)
         $subFolder = switch -wildcard ($fileExt) {
-            "*rom"      {"roms"; break}
-            "*dsk"      {"disks"; break}
-            "*img"      {"disks"; break}
-            "*fd*"      {"disks"; break}
-            "*asd"      {"disks"; break}
-            "*ips"      {"patches"; break}
-            "*cas"      {"tapes"; break}
-            default     {"rom"; break}
+            "*rom"      { "roms"; break }
+            "*dsk"      { "disks"; break }
+            "*img"      { "disks"; break }
+            "*fd*"      { "disks"; break }
+            "*asd"      { "disks"; break }
+            "*ips"      { "patches"; break }
+            "*cas"      { "tapes"; break }
+            default     { "rom"; break }
         }
 
         $subFolder.ToUpper()
@@ -220,7 +232,10 @@ function SetSubFolder {
 }
 
 function CatDisks {
-    # Concatenate disk images
+    <#
+        .SYNOPSIS
+            Concatenate disk images
+    #>
     param (
         [string]$DiskPath
     )
